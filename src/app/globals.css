@@ -1,22 +1,41 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Breakpoints: min-width and min-height */
+@custom-variant xs (@media (min-width: 0px));
+@custom-variant xxsm (@media (min-width: 320px));
+@custom-variant xsm (@media (min-width: 440px));
+@custom-variant sm (@media (min-width: 640px));
+@custom-variant md (@media (min-width: 768px));
+@custom-variant lg (@media (min-width: 1024px));
+@custom-variant xl (@media (min-height: 550px) and (min-width: 1280px));
+@custom-variant mxl (@media (min-height: 680px) and (min-width: 1380px));
+@custom-variant 2xl (@media (min-height: 750px) and (min-width: 1536px));
+@custom-variant 3xl (@media (min-height: 850px) and (min-width: 1750px));
+@custom-variant 4xl (@media (min-height: 1080px) and (min-width: 2000px));
 
 @theme inline {
+  /* Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Fonts */
+  --font-inter: var(--font-inter);
+  --font-instrument: var(--font-instrument);
+  /* Text sizes */
+  --text-2xs: 0.625rem;
+  --text-3xs: 0.5rem;
+  --text-4xs: 0.4rem;
+}
+
+:root {
+  --background: #fff;
+  --foreground: #fff;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  /* :root {
     --background: #0a0a0a;
     --foreground: #ededed;
-  }
+  } */
 }
 
 body {
