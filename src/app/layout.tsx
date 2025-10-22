@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Instrument_Sans } from "next/font/google";
 import "./globals.css";
+import SiteHeader from "@/components/header/site-header";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -30,7 +31,8 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${instrumentSans.variable} antialiased`}
       >
-        {children}
+        <SiteHeader />
+        <div className="pt-16">{children}</div>
       </body>
     </html>
   );
