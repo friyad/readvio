@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import HeroImage from "@/assets/images/books-img.png";
+import { BookOpen } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -27,7 +28,10 @@ const Hero = () => {
               <Button variant="orange">Start your free trial</Button>
             </Link>
             <Link href="/browse">
-              <Button variant="outline">Browse books</Button>
+              <Button variant="outline">
+                <BookOpen className="size-5 mr-2" />
+                Browse books
+              </Button>
             </Link>
           </div>
         </div>
