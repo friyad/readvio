@@ -69,49 +69,51 @@ export default function SiteHeader({
   ));
 
   return (
-    <header
-      className={cn(
-        "z-50 inset-x-0 justify-between border-b border-secondary-orange bg-clean-white",
-        scroll.y <= 765
-          ? "relative translate-y-0"
-          : !pinned
-          ? "-translate-y-full"
-          : "sticky top-0 translate-y-0 transition-all duration-500 shadow-md"
-      )}
-    >
-      <div className="h-1 md:h-2 w-full bg-linear-to-l from-primary-orange to-secondary-orange" />
+    <>
+      <header
+        className={cn(
+          "border-b border-secondary-orange bg-clean-white",
+          scroll.y <= 765
+            ? "relative translate-y-0"
+            : !pinned
+            ? "-translate-y-full"
+            : "sticky top-0 z-30 translate-y-0 transition-all duration-500 shadow-md"
+        )}
+      >
+        <div className="h-1 md:h-2 w-full bg-linear-to-l from-primary-orange to-secondary-orange" />
 
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Brand />
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          <Brand />
 
-        <nav className="hidden items-center gap-6 md:flex">{items}</nav>
+          <nav className="hidden items-center gap-6 md:flex">{items}</nav>
 
-        <div className="flex items-center gap-3">
-          <div className="hidden items-center gap-2 rounded-full border border-accent-blue/20 px-3 py-1 text-xs font-medium md:flex bg-accent-blue/5">
-            <span className="inline-flex h-2 w-2 rounded-full bg-primary-orange" />
-            <span className="text-primary-blue">Referral</span>
-            <span className="font-semibold text-primary-blue">
-              {referralPoints} pts
-            </span>
+          <div className="flex items-center gap-3">
+            <div className="hidden items-center gap-2 rounded-full border border-accent-blue/20 px-3 py-1 text-xs font-medium md:flex bg-accent-blue/5">
+              <span className="inline-flex h-2 w-2 rounded-full bg-primary-orange" />
+              <span className="text-primary-blue">Referral</span>
+              <span className="font-semibold text-primary-blue">
+                {referralPoints} pts
+              </span>
+            </div>
+
+            <div className="hidden md:block">
+              <ProfileMenu
+                userName={userName || "Guest"}
+                referralPoints={referralPoints || 0}
+              />
+            </div>
           </div>
 
-          <div className="hidden md:block">
-            <ProfileMenu
-              userName={userName || "Guest"}
-              referralPoints={referralPoints || 0}
-            />
-          </div>
+          <button
+            type="button"
+            aria-label="Open menu"
+            className="-ml-1 inline-flex items-center justify-center rounded-md p-2 hover:bg-secondary-orange/10 md:hidden"
+            onClick={() => setOpen(true)}
+          >
+            <Hamburger open={false} />
+          </button>
         </div>
-
-        <button
-          type="button"
-          aria-label="Open menu"
-          className="-ml-1 inline-flex items-center justify-center rounded-md p-2 hover:bg-secondary-orange/10 md:hidden"
-          onClick={() => setOpen(true)}
-        >
-          <Hamburger open={false} />
-        </button>
-      </div>
+      </header>
 
       {/* Mobile drawer */}
       <Drawer
@@ -162,6 +164,6 @@ export default function SiteHeader({
           </div>
         </div>
       </Drawer>
-    </header>
+    </>
   );
 }

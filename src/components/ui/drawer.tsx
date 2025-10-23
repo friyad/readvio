@@ -21,13 +21,27 @@ const sideToMotion: Record<DrawerSide, any> = {
     initial: { x: "-100%" },
     animate: { x: 0 },
     exit: { x: "-100%" },
-    style: { left: 0, top: 0, bottom: 0, width: "80%", maxWidth: 360 },
+    style: {
+      left: 0,
+      top: 0,
+      bottom: 0,
+      width: "80%",
+      maxWidth: 360,
+      height: "100dvh",
+    },
   },
   right: {
     initial: { x: "100%" },
     animate: { x: 0 },
     exit: { x: "100%" },
-    style: { right: 0, top: 0, bottom: 0, width: "80%", maxWidth: 360 },
+    style: {
+      right: 0,
+      top: 0,
+      bottom: 0,
+      width: "80%",
+      maxWidth: 360,
+      height: "100dvh",
+    },
   },
   top: {
     initial: { y: "-100%" },
@@ -64,7 +78,9 @@ export function Drawer({
       {isOpen && (
         <>
           <motion.div
-            className={`fixed inset-0 bg-black/40 ${overlayClassName ?? ""}`}
+            className={`fixed z-40 inset-0 bg-black/40 h-screen w-screen ${
+              overlayClassName ?? ""
+            }`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
