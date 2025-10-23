@@ -13,7 +13,8 @@
 @custom-variant 3xl (@media (min-height: 850px) and (min-width: 1750px));
 @custom-variant 4xl (@media (min-height: 1080px) and (min-width: 2000px));
 
-@theme inline {
+@theme {
+  --breakpoint-*: initial;
   /* Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
