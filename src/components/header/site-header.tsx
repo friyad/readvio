@@ -72,12 +72,12 @@ export default function SiteHeader({
     <>
       <header
         className={cn(
-          "border-b border-secondary-orange bg-clean-white",
+          "border-b border-secondary-orange bg-clean-white relative z-30",
           scroll.y <= 765
             ? "relative translate-y-0"
             : !pinned
             ? "-translate-y-full"
-            : "sticky top-0 z-30 translate-y-0 transition-all duration-500 shadow-md"
+            : "sticky top-0 translate-y-0 transition-all duration-500 shadow-md"
         )}
       >
         <div className="h-1 md:h-2 w-full bg-linear-to-l from-primary-orange to-secondary-orange" />

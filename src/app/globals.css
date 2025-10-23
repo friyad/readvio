@@ -53,6 +53,18 @@
   } */
 }
 
+@layer base {
+  section {
+    @apply mx-auto max-w-7xl px-4 py-10 sm:px-6 md:py-14 lg:py-14 lg:px-8;
+  }
+}
+
 body {
   font-family: var(--font-inter);
+  /* background-color: radial-gradient(
+    100% 50% at 50% 0%,
+    #e87a3021 0%,
+    #e87a3000 50%,
+    #e87a3000 100%
+  ); */
 }
