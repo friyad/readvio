@@ -118,6 +118,7 @@ export function Menu({
           window.clearTimeout(hoverTimeoutRef.current);
         hoverTimeoutRef.current = window.setTimeout(() => setOpen(false), 80);
       }}
+      style={{ zIndex: 99999 }}
     >
       {clonedTrigger}
       <AnimatePresence>
@@ -132,7 +133,7 @@ export function Menu({
             role="menu"
           >
             <div
-              className={`min-w-48 overflow-hidden rounded-md border bg-white text-foreground shadow-xl ${
+              className={`min-w-48 overflow-hidden relative rounded-md border bg-white text-foreground shadow-xl ${
                 panelClassName ?? ""
               }`}
             >

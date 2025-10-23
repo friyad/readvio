@@ -13,7 +13,8 @@
 @custom-variant 3xl (@media (min-height: 850px) and (min-width: 1750px));
 @custom-variant 4xl (@media (min-height: 1080px) and (min-width: 2000px));
 
-@theme inline {
+@theme {
+  --breakpoint-*: initial;
   /* Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -53,6 +54,24 @@
   } */
 }
 
+@layer base {
+  section {
+    @apply mx-auto max-w-7xl px-4 py-10 sm:px-6 md:py-14 lg:py-14 lg:px-8;
+  }
+  h2 {
+    @apply font-bold text-lg lg:text-xl 2xl:text-2xl;
+  }
+  h3 {
+    @apply text-xl lg:text-2xl 2xl:text-3xl;
+  }
+}
+
 body {
   font-family: var(--font-inter);
+  /* background-color: radial-gradient(
+    100% 50% at 50% 0%,
+    #e87a3021 0%,
+    #e87a3000 50%,
+    #e87a3000 100%
+  ); */
 }
