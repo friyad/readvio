@@ -4,6 +4,7 @@ import StatsStrip from "./_components/StatsStrip";
 import CategoryTiles from "./_components/CategoryTiles";
 import { sections } from "@/data/books";
 import BooksSection from "./_components/BooksSection";
+import ReferralCta from "./_components/ReferralCta";
 
 export const metadata: Metadata = { title: "Readvio | Home" };
 
@@ -18,6 +19,8 @@ export default function Home() {
       {sections.map((s) => (
         <BooksSection key={s.id} section={s} />
       ))}
+
+      <ReferralCta />
     </main>
   );
 }
