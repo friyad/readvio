@@ -10,6 +10,8 @@ import ProfileMenu from "./profile-menu";
 import useScrollPinned from "@/hooks/scroll-pinned";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import { useAuthStore } from "@/stores/auth-store";
+import { Button } from "../ui/button";
 
 type SiteHeaderProps = {
   referralPoints?: number;
@@ -23,7 +25,7 @@ const navItems: { label: string; href: string }[] = [
   { label: "Pricing", href: "/pricing" },
 ];
 
-function Brand() {
+const Brand = () => {
   return (
     <Link
       href="/"
@@ -38,18 +40,36 @@ function Brand() {
       />
     </Link>
   );
-}
+};
 
-function Hamburger({ open }: { open: boolean }) {
+const Hamburger = ({ open }: { open: boolean }) => {
   if (open) return <XIcon className="text-background" />;
   return <MenuIcon className="text-background" />;
-}
+};
+
+const AuthButtons = ({ className }: { className: string }) => {
+  return (
+    <div className={cn("justify-end items-center gap-3", className)}>
+      <Link href="/login">
+        <Button size="sm" variant="outline" className="px-5">
+          Log in
+        </Button>
+      </Link>
+      <Link href="/sign-up">
+        <Button size="sm" variant="orange" className="px-5">
+          Sign Up
+        </Button>
+      </Link>
+    </div>
+  );
+};
 
 export default function SiteHeader({
   referralPoints = 0,
   userName,
 }: SiteHeaderProps) {
   const pathname = usePathname();
+  const user = useAuthStore((state) => state.user);
   const [open, setOpen] = useState(false);
   const { scroll, pinned } = useScrollPinned();
 
@@ -87,22 +107,26 @@ export default function SiteHeader({
 
           <nav className="hidden items-center gap-6 md:flex">{items}</nav>
 
-          <div className="flex items-center gap-3">
-            <div className="hidden items-center gap-2 rounded-full border border-accent-blue/20 px-3 py-1 text-xs font-medium md:flex bg-accent-blue/5">
-              <span className="inline-flex h-2 w-2 rounded-full bg-primary-orange" />
-              <span className="text-primary-blue">Referral</span>
-              <span className="font-semibold text-primary-blue">
-                {referralPoints} pts
-              </span>
-            </div>
+          {user && user.email ? (
+            <div className="flex items-center gap-3">
+              <div className="hidden items-center gap-2 rounded-full border border-accent-blue/20 px-3 py-1 text-xs font-medium md:flex bg-accent-blue/5">
+                <span className="inline-flex h-2 w-2 rounded-full bg-primary-orange" />
+                <span className="text-primary-blue">Referral</span>
+                <span className="font-semibold text-primary-blue">
+                  {referralPoints} pts
+                </span>
+              </div>
 
-            <div className="hidden md:block">
-              <ProfileMenu
-                userName={userName || "Guest"}
-                referralPoints={referralPoints || 0}
-              />
+              <div className="hidden md:block">
+                <ProfileMenu
+                  userName={userName || "Guest"}
+                  referralPoints={referralPoints || 0}
+                />
+              </div>
             </div>
-          </div>
+          ) : (
+            <AuthButtons className="hidden md:flex" />
+          )}
 
           <button
             type="button"
@@ -136,13 +160,15 @@ export default function SiteHeader({
           </div>
 
           <div className="flex-1 overflow-y-auto px-4 py-4">
-            <div className="mb-3 flex items-center gap-2 rounded-full border border-accent-blue/20 px-3 py-1 text-xs font-medium bg-accent-blue/5">
-              <span className="inline-flex h-2 w-2 rounded-full bg-primary-orange" />
-              <span className="text-primary-blue">Referral</span>
-              <span className="font-semibold text-primary-blue ml-auto">
-                {referralPoints} pts
-              </span>
-            </div>
+            {user && user.email && (
+              <div className="mb-3 flex items-center gap-2 rounded-full border border-accent-blue/20 px-3 py-1 text-xs font-medium bg-accent-blue/5">
+                <span className="inline-flex h-2 w-2 rounded-full bg-primary-orange" />
+                <span className="text-primary-blue">Referral</span>
+                <span className="font-semibold text-primary-blue ml-auto">
+                  {referralPoints} pts
+                </span>
+              </div>
+            )}
 
             <div className="flex flex-col">
               {navItems.map((item) => (
@@ -157,10 +183,14 @@ export default function SiteHeader({
               ))}
             </div>
 
-            <ProfileMenu
-              userName={userName || "Guest"}
-              referralPoints={referralPoints || 0}
-            />
+            {user && user.email ? (
+              <ProfileMenu
+                userName={userName || "Guest"}
+                referralPoints={referralPoints || 0}
+              />
+            ) : (
+              <AuthButtons className="mt-6 flex md:hidden flex-col gap-2 **:w-full **:justify-center" />
+            )}
           </div>
         </div>
       </Drawer>
