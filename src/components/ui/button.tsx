@@ -85,7 +85,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         >
           {loading ? (
             <motion.span
-              className="absolute left-4 flex items-center"
+              className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center"
               initial={{ opacity: 0, rotate: -60 }}
               animate={{ opacity: 1, rotate: 0 }}
               exit={{ opacity: 0, rotate: 60 }}
