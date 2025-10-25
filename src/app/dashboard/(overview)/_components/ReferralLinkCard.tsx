@@ -29,7 +29,7 @@ const ReferralLinkCard = () => {
   };
 
   return (
-    <div className="rounded-xl border border-accent-blue/20 bg-white p-6 shadow-sm">
+    <div className="rounded-xl border border-accent-blue/20 bg-white p-4 xsm:p-5 lg:p-6 shadow-sm">
       <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-primary-blue">
         <LinkIcon className="h-4 w-4" /> Your Referral Link
       </div>
