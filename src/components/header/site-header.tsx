@@ -25,9 +25,9 @@ const navItems: { label: string; href: string }[] = [
   { label: "Pricing", href: "/pricing" },
 ];
 
-const Brand = () => {
+export const Brand = () => {
   return (
-    <Link
+    <a
       href="/"
       className="flex items-center gap-2 text-base font-semibold text-primary-blue"
     >
@@ -38,7 +38,7 @@ const Brand = () => {
         height={150}
         className="w-auto h-6"
       />
-    </Link>
+    </a>
   );
 };
 
@@ -87,6 +87,10 @@ export default function SiteHeader({
       {item.label}
     </Link>
   ));
+
+  if (pathname.startsWith("/dashboard")) {
+    return null;
+  }
 
   return (
     <>

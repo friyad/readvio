@@ -17,7 +17,10 @@ const instrumentSans = Instrument_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Readvio",
+  title: {
+    template: "%s | Readvio",
+    default: "Home | Readvio",
+  },
   description:
     "Readvio is a modern digital library and e-book store where reading meets rewards.",
 };
@@ -33,7 +36,7 @@ export default function RootLayout({
         className={`${inter.variable} ${instrumentSans.variable} antialiased`}
       >
         <SiteHeader />
-        <div>{children}</div>
+        <div className="overflow-x-clip">{children}</div>
       </body>
     </html>
   );
