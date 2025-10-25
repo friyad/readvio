@@ -36,7 +36,7 @@ export default function RootLayout({
         className={`${inter.variable} ${instrumentSans.variable} antialiased`}
       >
         <SiteHeader />
-        <div>{children}</div>
+        <div className="overflow-x-clip">{children}</div>
       </body>
     </html>
   );

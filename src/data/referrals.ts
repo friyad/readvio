@@ -7,7 +7,7 @@ export const referralStats: ReferralStats = {
 };
 
 export const referredUsers: ReferralUser[] = Array.from(
-  { length: 10 },
+  { length: 100 },
   (_, i) => ({
     id: `u-${i + 1}`,
     name: ["Alex Morgan", "Sam Taylor", "Jordan Lee", "Casey Reed"][i % 4],

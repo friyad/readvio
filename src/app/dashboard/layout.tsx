@@ -15,13 +15,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="">
+    <div className="w-full">
       <Topbar />
-      <div className="flex min-h-[calc(100vh-73px)]">
+      <div className="flex min-h-[calc(100vh-73px)] w-full">
         <div className="hidden md:block">
           <Sidebar />
         </div>
-        <div className="flex-1 bg-clean-white/50 p-4 sm:p-6 lg:p-8">
+        <div className="flex-1 w-full bg-clean-white/50 p-4 sm:p-6 lg:p-8">
           {children}
         </div>
       </div>
