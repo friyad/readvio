@@ -17,7 +17,10 @@ const instrumentSans = Instrument_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Readvio",
+  title: {
+    template: "%s | Readvio",
+    default: "Home | Readvio",
+  },
   description:
     "Readvio is a modern digital library and e-book store where reading meets rewards.",
 };

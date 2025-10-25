@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import Menu, { MenuItem, MenuSeparator } from "../ui/menu";
+import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
 
 const Avatar = ({ name }: { name?: string }) => {
   const initials = (name ?? "Guest")
@@ -50,6 +52,21 @@ type ProfileMenuProps = {
 
 const ProfileMenu = ({ userName, referralPoints }: ProfileMenuProps) => {
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    // setIsLoading(true);
+    // try {
+    //   await signOut();
+    //   setIsLoading(false);
+    //   router.push("/");
+    //   setOpen(false);
+    // } catch (error) {
+    //   setIsLoading(false);
+    //   console.error(error);
+    // }
+  };
 
   return (
     <>
@@ -59,64 +76,86 @@ const ProfileMenu = ({ userName, referralPoints }: ProfileMenuProps) => {
         align="end"
         panelClassName="hidden md:block"
       >
-        <div className="px-3 py-2 text-sm font-medium text-primary-blue/80">
-          Signed in as {userName ?? "Guest"}
-        </div>
-        <MenuSeparator />
-        <MenuItem href="/profile">
-          <span className="text-primary-blue">Profile</span>
-        </MenuItem>
-        <MenuItem href="/orders">
-          <span className="text-primary-blue">Orders</span>
-        </MenuItem>
-        <MenuItem href="/settings">
-          <span className="text-primary-blue">Settings</span>
-        </MenuItem>
-        <MenuSeparator />
         <MenuItem>
           <div className="flex items-center gap-2">
             <span className="inline-flex h-2 w-2 rounded-full bg-primary-orange" />
             <span className="text-primary-blue">Referral points</span>
-            <span className="ml-1 font-semibold text-primary-blue">
+            <span className="ml-0.5 font-semibold text-primary-blue">
               {referralPoints}
             </span>
           </div>
         </MenuItem>
         <MenuSeparator />
-        <MenuItem>
+        <MenuItem href="/dashboard/profile">
+          <span className="text-primary-blue">Profile</span>
+        </MenuItem>
+        <MenuItem href="/dashboard/referrals">
+          <span className="text-primary-blue">Referrals</span>
+        </MenuItem>
+        <MenuItem href="/dashboard">
+          <span className="text-primary-blue">Dashboard</span>
+        </MenuItem>
+        <MenuItem href="/dashboard/settings">
+          <span className="text-primary-blue">Settings</span>
+        </MenuItem>
+        <MenuSeparator />
+        <MenuItem
+          onSelect={handleSignOut}
+          disabled={isLoading}
+          className="cursor-pointer"
+        >
           <span className="text-secondary-orange font-semibold">Sign out</span>
         </MenuItem>
       </Menu>
 
       {/* For small Devices */}
 
-      <div className="rounded-md border border-accent-blue/20 bg-accent-blue/5 md:hidden">
-        <div className="px-3 py-2 text-xs font-bold text-primary-blue/80">
-          Account
+      <div className="md:hidden">
+        <div className="rounded-md border border-accent-blue/20 bg-accent-blue/5">
+          <div className="px-3 py-2 text-xs font-bold text-primary-blue/80">
+            Account
+          </div>
+          <div className="border-t border-accent-blue/10 pt-2">
+            <Link
+              href="/dashboard/profile"
+              className="block px-3 py-3 text-sm text-primary-blue hover:bg-secondary-orange/10"
+              onClick={() => setOpen(false)}
+            >
+              Profile
+            </Link>
+            <Link
+              href="/dashboard/referrals"
+              className="block px-3 py-3 text-sm text-primary-blue hover:bg-secondary-orange/10"
+              onClick={() => setOpen(false)}
+            >
+              Referrals
+            </Link>
+            <Link
+              href="/dashboard"
+              className="block px-3 py-3 text-sm text-primary-blue hover:bg-secondary-orange/10"
+              onClick={() => setOpen(false)}
+            >
+              Dashboard
+            </Link>
+            <Link
+              href="/dashboard/settings"
+              className="block px-3 py-3 text-sm text-primary-blue hover:bg-secondary-orange/10"
+              onClick={() => setOpen(false)}
+            >
+              Settings
+            </Link>
+          </div>
         </div>
-        <div className="border-t border-accent-blue/10 pt-2">
-          <Link
-            href="/profile"
-            className="block px-3 py-3 text-sm text-primary-blue hover:bg-secondary-orange/10"
-            onClick={() => setOpen(false)}
-          >
-            Profile
-          </Link>
-          <Link
-            href="/orders"
-            className="block px-3 py-3 text-sm text-primary-blue hover:bg-secondary-orange/10"
-            onClick={() => setOpen(false)}
-          >
-            Orders
-          </Link>
-          <Link
-            href="/settings"
-            className="block px-3 py-3 text-sm text-primary-blue hover:bg-secondary-orange/10"
-            onClick={() => setOpen(false)}
-          >
-            Settings
-          </Link>
-        </div>
+
+        <Button
+          variant="orange"
+          size="sm"
+          disabled={isLoading}
+          onClick={handleSignOut}
+          className="w-full mt-6"
+        >
+          Sign out
+        </Button>
       </div>
     </>
   );

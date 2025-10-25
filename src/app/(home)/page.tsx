@@ -7,7 +7,7 @@ import BooksSection from "./_components/BooksSection";
 import ReferralCta from "./_components/ReferralCta";
 import SiteFooter from "@/components/footer/site-footer";
 
-export const metadata: Metadata = { title: "Readvio | Home" };
+export const metadata: Metadata = { title: "Home" };
 
 export default function Home() {
   return (

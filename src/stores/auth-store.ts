@@ -13,7 +13,15 @@ export type AuthActions = {
 export type AuthStore = AuthState & AuthActions;
 
 export const useAuthStore = create<AuthStore>((set) => ({
-  user: null,
+  user: {
+    id: "1",
+    name: "John Doe",
+    email: "john.doe@example.com",
+    image: "https://github.com/shadcn.png",
+    emailVerified: true,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
   setUser: (user: User) => set({ user }),
   clearUser: () => set({ user: null }),
 }));
