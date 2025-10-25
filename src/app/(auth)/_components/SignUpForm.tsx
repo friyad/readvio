@@ -7,17 +7,18 @@ import { signupSchema, type SignupValues } from "@/validations/auth";
 import { TextInput } from "@/components/ui/input-text";
 import { PasswordInput } from "@/components/ui/input-password";
 import { Button } from "@/components/ui/button";
-import xIcon from "@/assets/icons/x.png";
-import googleIcon from "@/assets/icons/google.png";
-import Image from "next/image";
 import { Checkbox } from "@/components/ui/checkbox";
-import { signIn, signUp } from "@/lib/auth-client";
+import { signUp } from "@/lib/auth-client";
 import { useState } from "react";
+import { toast } from "sonner";
+import { extractErrorMessage } from "@/utils/errorExtractor";
+import { useAuthStore } from "@/stores/auth-store";
+import { useRouter } from "next/navigation";
 
 const SignUpForm = () => {
+  const setUser = useAuthStore((state) => state.setUser);
+  const router = useRouter();
   const [isEmailLoading, setIsEmailLoading] = useState(false);
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
-  const [isTwitterLoading, setIsTwitterLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -37,34 +38,19 @@ const SignUpForm = () => {
   const onSubmit = async (values: SignupValues) => {
     setIsEmailLoading(true);
     try {
-      await signUp.email({
+      const res = await signUp.email({
         email: values.email,
         name: values.name,
         password: values.password,
       });
+      if (res.error) throw new Error(res.error.message);
+      setUser(res.data?.user);
+      router.replace("/");
+      toast.success("Sign up successful");
       setIsEmailLoading(false);
-    } catch (e) {
+    } catch (e: unknown) {
+      toast.error(extractErrorMessage(e));
       setIsEmailLoading(false);
-    }
-  };
-
-  const googleSignUp = async () => {
-    setIsGoogleLoading(true);
-    try {
-      await signIn.social({ provider: "google" });
-      setIsGoogleLoading(false);
-    } catch (e) {
-      setIsGoogleLoading(false);
-    }
-  };
-
-  const twitterSignUp = async () => {
-    setIsTwitterLoading(true);
-    try {
-      await signIn.social({ provider: "twitter" });
-      setIsTwitterLoading(false);
-    } catch (e) {
-      setIsTwitterLoading(false);
     }
   };
 
@@ -136,41 +122,6 @@ const SignUpForm = () => {
         <div className="relative py-2 text-center text-xs text-primary-blue/60">
           <span className="relative z-10 bg-white px-2">or continue with</span>
           <span className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-accent-blue/20" />
-        </div>
-
-        <div className="grid grid-cols-1 xsm:grid-cols-2 gap-3">
-          <Button
-            type="button"
-            variant="secondary"
-            className="w-full"
-            onClick={googleSignUp}
-            loading={isGoogleLoading}
-          >
-            <Image
-              src={googleIcon}
-              alt="Google"
-              width={60}
-              height={60}
-              className="size-5 mr-2"
-            />
-            <span className="text-sm">Google</span>
-          </Button>
-          <Button
-            type="button"
-            variant="secondary"
-            className="w-full"
-            onClick={twitterSignUp}
-            loading={isTwitterLoading}
-          >
-            <Image
-              src={xIcon}
-              alt="X"
-              width={60}
-              height={60}
-              className="size-4 mr-2"
-            />
-            <span className="text-sm">Twitter</span>
-          </Button>
         </div>
 
         <p className="text-center text-xs text-primary-blue/70">

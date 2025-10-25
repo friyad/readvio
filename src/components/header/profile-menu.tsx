@@ -4,6 +4,10 @@ import Menu, { MenuItem, MenuSeparator } from "../ui/menu";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import Avatar from "../ui/avatar";
+import { signOut } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { extractErrorMessage } from "@/utils/errorExtractor";
+import { useAuthStore } from "@/stores/auth-store";
 
 const ProfileMenuTrigger = ({ userName }: { userName: string }) => {
   return (
@@ -38,21 +42,26 @@ type ProfileMenuProps = {
 };
 
 const ProfileMenu = ({ userName, referralPoints }: ProfileMenuProps) => {
+  const clearUser = useAuthStore((state) => state.clearUser);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleSignOut = async () => {
-    // setIsLoading(true);
-    // try {
-    //   await signOut();
-    //   setIsLoading(false);
-    //   router.push("/");
-    //   setOpen(false);
-    // } catch (error) {
-    //   setIsLoading(false);
-    //   console.error(error);
-    // }
+    setIsLoading(true);
+    try {
+      const res = await signOut();
+      if (res.error) throw new Error(res.error.message);
+      clearUser();
+      toast.success("Signed out successfully");
+      setIsLoading(false);
+      router.replace("/");
+      setOpen(false);
+    } catch (error: unknown) {
+      toast.error(extractErrorMessage(error));
+      setIsLoading(false);
+      console.error(error);
+    }
   };
 
   return (

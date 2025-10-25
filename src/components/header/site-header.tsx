@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Drawer from "@/components/ui/drawer";
 import Logo from "@/assets/images/logo.png";
 import Image from "next/image";
@@ -10,12 +10,12 @@ import ProfileMenu from "./profile-menu";
 import useScrollPinned from "@/hooks/scroll-pinned";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
-import { useAuthStore } from "@/stores/auth-store";
 import { Button } from "../ui/button";
+import { User } from "better-auth";
+import { useAuthStore } from "@/stores/auth-store";
 
 type SiteHeaderProps = {
-  referralPoints?: number;
-  userName?: string;
+  user?: User;
 };
 
 const navItems: { label: string; href: string }[] = [
@@ -64,14 +64,19 @@ const AuthButtons = ({ className }: { className: string }) => {
   );
 };
 
-export default function SiteHeader({
-  referralPoints = 0,
-  userName,
-}: SiteHeaderProps) {
+export default function SiteHeader({ user: userData }: SiteHeaderProps) {
   const pathname = usePathname();
-  const user = useAuthStore((state) => state.user);
   const [open, setOpen] = useState(false);
   const { scroll, pinned } = useScrollPinned();
+  const {
+    setUser,
+    clearUser,
+    user: userState,
+  } = useAuthStore((state) => state);
+
+  const user = userState || userData;
+
+  const referralPoints = 0;
 
   const items = navItems.map((item) => (
     <Link
@@ -87,6 +92,14 @@ export default function SiteHeader({
       {item.label}
     </Link>
   ));
+
+  useEffect(() => {
+    if (!userData) {
+      clearUser();
+      return;
+    }
+    setUser(userData);
+  }, [userData]);
 
   if (pathname.startsWith("/dashboard")) {
     return null;
@@ -123,7 +136,7 @@ export default function SiteHeader({
 
               <div className="hidden md:block">
                 <ProfileMenu
-                  userName={userName || "Guest"}
+                  userName={user.name || "Guest"}
                   referralPoints={referralPoints || 0}
                 />
               </div>
@@ -189,7 +202,7 @@ export default function SiteHeader({
 
             {user && user.email ? (
               <ProfileMenu
-                userName={userName || "Guest"}
+                userName={user.name || "Guest"}
                 referralPoints={referralPoints || 0}
               />
             ) : (
