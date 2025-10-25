@@ -71,3 +71,6 @@ export const bestSellers: BookSection = {
 };
 
 export const sections: BookSection[] = [newReleases, editorsPicks, bestSellers];
+export const allBooks: Book[] = Array.from({ length: 100 }, (_, i) =>
+  makeBook(i + 100)
+);
