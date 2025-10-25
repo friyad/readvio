@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Sidebar from "./_components/Sidebar";
 import Topbar from "./_components/Topbar";
+import { redirect } from "next/navigation";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: {
@@ -9,11 +12,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session || !session?.user) {
+    redirect("/login");
+  }
+
   return (
     <div className="w-full">
       <Topbar />

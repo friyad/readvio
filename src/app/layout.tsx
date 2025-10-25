@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, Instrument_Sans } from "next/font/google";
 import SiteHeader from "@/components/header/site-header";
+import { Toaster } from "sonner";
 
 import "./globals.css";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -25,17 +28,24 @@ export const metadata: Metadata = {
     "Readvio is a modern digital library and e-book store where reading meets rewards.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
   return (
     <html lang="en">
       <body
         className={`${inter.variable} ${instrumentSans.variable} antialiased`}
       >
-        <SiteHeader />
+        <div className="[&>section]:p-0">
+          <Toaster richColors closeButton position="top-center" />
+        </div>
+        <SiteHeader user={session?.user} />
         <div className="overflow-x-clip">{children}</div>
       </body>
     </html>

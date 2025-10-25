@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { User } from "better-auth";
 
 export type AuthState = {
-  user: User | null;
+  user?: User | null;
 };
 
 export type AuthActions = {
@@ -13,15 +13,7 @@ export type AuthActions = {
 export type AuthStore = AuthState & AuthActions;
 
 export const useAuthStore = create<AuthStore>((set) => ({
-  user: {
-    id: "1",
-    name: "John Doe",
-    email: "john.doe@example.com",
-    image: "https://github.com/shadcn.png",
-    emailVerified: true,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
+  user: null,
   setUser: (user: User) => set({ user }),
   clearUser: () => set({ user: null }),
 }));
