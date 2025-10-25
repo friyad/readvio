@@ -75,7 +75,7 @@ const SiteFooter = () => {
               <ul className="space-y-3">
                 <li>
                   <Link
-                    href="/browse"
+                    href="/books"
                     className="hover:text-primary-orange transition"
                   >
                     Browse Books
@@ -83,18 +83,18 @@ const SiteFooter = () => {
                 </li>
                 <li>
                   <Link
-                    href="/store"
+                    href="/library"
                     className="hover:text-primary-orange transition"
                   >
-                    Store
+                    Library
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href="/rewards"
+                    href="/pricing"
                     className="hover:text-primary-orange transition"
                   >
-                    Rewards
+                    Pricing
                   </Link>
                 </li>
                 <li>

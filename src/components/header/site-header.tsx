@@ -19,10 +19,10 @@ type SiteHeaderProps = {
 };
 
 const navItems: { label: string; href: string }[] = [
-  { label: "Browse", href: "/browse" },
+  { label: "Books", href: "/books" },
   { label: "Library", href: "/library" },
-  { label: "Store", href: "/store" },
   { label: "Pricing", href: "/pricing" },
+  { label: "About Us", href: "/about-us" },
 ];
 
 export const Brand = () => {
