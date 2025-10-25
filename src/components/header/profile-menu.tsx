@@ -3,20 +3,7 @@ import { useState } from "react";
 import Menu, { MenuItem, MenuSeparator } from "../ui/menu";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
-
-const Avatar = ({ name }: { name?: string }) => {
-  const initials = (name ?? "Guest")
-    .split(" ")
-    .map((s) => s[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-  return (
-    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-blue/10 text-sm font-medium text-primary-blue">
-      {initials}
-    </div>
-  );
-};
+import Avatar from "../ui/avatar";
 
 const ProfileMenuTrigger = ({ userName }: { userName: string }) => {
   return (
