@@ -1,3 +1,4 @@
+import { Ratings } from "@/components/ui/ratings";
 import { cn } from "@/lib/utils";
 import type { Book } from "@/types/book";
 import { Star } from "lucide-react";
@@ -14,7 +15,7 @@ export default function BookCard({ book }: Props) {
 
   return (
     <Link
-      href={`/book/${book.id}`}
+      href={`/books/${book.id}`}
       className="group flex flex-col overflow-hidden rounded-lg border border-accent-blue/20 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow w-full"
     >
       <div className="relative aspect-20/18 w-full overflow-hidden bg-clean-white">
@@ -37,22 +38,7 @@ export default function BookCard({ book }: Props) {
         </div>
 
         <div className="flex items-center gap-1 text-primary-orange">
-          {Array.from({ length: 5 }, (_, i) => (
-            <Star
-              key={i}
-              className={cn(
-                "h-3.5 w-3.5",
-                i < fullStars
-                  ? "fill-current"
-                  : i === fullStars && hasHalf
-                  ? "[clip-path:polygon(0_0,50%_0,50%_100%,0_100%)] fill-current"
-                  : "opacity-30"
-              )}
-            />
-          ))}
-          <span className="ml-1 text-[0.7rem] text-primary-blue/70">
-            ({book.ratingCount})
-          </span>
+          <Ratings rating={book.rating} ratingCount={book.ratingCount} />
         </div>
 
         <div className="mt-auto flex items-center justify-between">

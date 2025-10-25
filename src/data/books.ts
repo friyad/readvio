@@ -8,28 +8,28 @@ export const categories: Category[] = [
     id: "ebooks",
     name: "E-books",
     icon: "book-open",
-    href: "/browse?type=ebook",
+    href: "/books?type=ebook",
     accentClass: "bg-accent-blue/10 text-primary-blue",
   },
   {
     id: "audiobooks",
     name: "Audiobooks",
     icon: "headphones",
-    href: "/browse?type=audio",
+    href: "/books?type=audio",
     accentClass: "bg-primary-orange/10 text-primary-blue",
   },
   {
     id: "learning",
     name: "Learning",
     icon: "lightbulb",
-    href: "/browse?type=learning",
+    href: "/books?type=learning",
     accentClass: "bg-primary-blue/10 text-primary-blue",
   },
   {
     id: "kids",
     name: "Kids & Teens",
     icon: "sparkles",
-    href: "/browse?audience=kids",
+    href: "/books?audience=kids",
     accentClass: "bg-secondary-orange/10 text-primary-blue",
   },
 ];
@@ -49,7 +49,7 @@ const makeBook = (i: number): Book => ({
 export const newReleases: BookSection = {
   id: "new",
   title: "New releases in print",
-  ctaHref: "/browse?sort=new",
+  ctaHref: "/books?sort=new",
   ctaLabel: "View all",
   books: Array.from({ length: 12 }, (_, i) => makeBook(i + 1)),
 };
@@ -57,7 +57,7 @@ export const newReleases: BookSection = {
 export const editorsPicks: BookSection = {
   id: "editors",
   title: "Editors' best books of the month",
-  ctaHref: "/browse?filter=editors",
+  ctaHref: "/books?filter=editors",
   ctaLabel: "See picks",
   books: Array.from({ length: 10 }, (_, i) => makeBook(i + 30)),
 };
@@ -65,9 +65,12 @@ export const editorsPicks: BookSection = {
 export const bestSellers: BookSection = {
   id: "bestsellers",
   title: "Best sellers on Readvio",
-  ctaHref: "/browse?sort=top",
+  ctaHref: "/books?sort=top",
   ctaLabel: "Top charts",
   books: Array.from({ length: 12 }, (_, i) => makeBook(i + 60)),
 };
 
 export const sections: BookSection[] = [newReleases, editorsPicks, bestSellers];
+export const allBooks: Book[] = Array.from({ length: 100 }, (_, i) =>
+  makeBook(i + 100)
+);

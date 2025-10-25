@@ -6,7 +6,7 @@ import "swiper/css/scrollbar";
 
 import type { BookSection } from "@/types/book";
 import Link from "next/link";
-import BookCard from "./BookCard";
+import BookCard from "../../books/_components/BookCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Scrollbar } from "swiper/modules";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
