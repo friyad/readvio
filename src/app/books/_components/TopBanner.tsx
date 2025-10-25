@@ -1,7 +1,7 @@
 const TopBanner = () => {
   return (
-    <div className="bg-clean-white/50 relative h-[calc(45dvh-100px)] grid items-center">
-      <section className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 relative z-2">
+    <div className="bg-clean-white/50 relative h-[calc(45dvh-100px)] overflow-hidden grid items-center">
+      <section className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 relative z-2 py-0">
         <div>
           <h3 className="mt-4 font-extrabold text-primary-blue font-instrument">
             Browse Books

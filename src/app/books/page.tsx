@@ -7,7 +7,21 @@ export const metadata: Metadata = {
   title: "Books",
 };
 
-export default function BooksPage() {
+async function getBooks() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching books: ", error);
+    return [];
+  }
+}
+
+export default async function BooksPage() {
+  const books = await getBooks();
+  console.log("Books: ", books);
+
   return (
     <div className="">
       <TopBanner />
