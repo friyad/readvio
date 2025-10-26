@@ -1,10 +1,4 @@
-import type { ReferralStats, ReferralUser } from "@/types/referral";
-
-export const referralStats: ReferralStats = {
-  referredCount: 10,
-  convertedCount: 4,
-  totalCredits: 8,
-};
+import type { ReferralUser } from "@/types/referral";
 
 export const referredUsers: ReferralUser[] = Array.from(
   { length: 100 },

@@ -128,7 +128,7 @@ export default function SiteHeader({ user: userData }: SiteHeaderProps) {
                 <span className="inline-flex h-2 w-2 rounded-full bg-primary-orange" />
                 <span className="text-primary-blue">Referral</span>
                 <span className="font-semibold text-primary-blue">
-                  {user?.referrals?.length || 0} pts
+                  {user?.creditScore || 0} pts
                 </span>
               </div>
 
@@ -177,7 +177,7 @@ export default function SiteHeader({ user: userData }: SiteHeaderProps) {
                 <span className="inline-flex h-2 w-2 rounded-full bg-primary-orange" />
                 <span className="text-primary-blue">Referral</span>
                 <span className="font-semibold text-primary-blue ml-auto">
-                  {user?.referrals?.length || 0} pts
+                  {user?.creditScore || 0} pts
                 </span>
               </div>
             )}

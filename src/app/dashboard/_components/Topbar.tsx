@@ -11,19 +11,13 @@ import ProfileMenu from "@/components/header/profile-menu";
 const Topbar = () => {
   const [open, setOpen] = useState(false);
 
-  const userName = "Friyad";
-  const referralPoints = 40;
-
   return (
     <>
       <div className="flex h-16 items-center justify-between border-b border-accent-blue/20 bg-clean-white px-4 sm:px-6 lg:px-8">
         <Brand />
 
         <div className="hidden md:block">
-          <ProfileMenu
-            userName={userName || "Guest"}
-            referralPoints={referralPoints || 0}
-          />
+          <ProfileMenu />
         </div>
 
         <Button
@@ -42,11 +36,7 @@ const Topbar = () => {
         side="left"
         panelClassName="md:hidden w-72"
       >
-        <Sidebar
-          setOpen={setOpen}
-          userName={userName || "Guest"}
-          referralPoints={referralPoints || 0}
-        />
+        <Sidebar setOpen={setOpen} />
       </Drawer>
     </>
   );

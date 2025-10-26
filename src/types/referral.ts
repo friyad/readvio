@@ -7,12 +7,6 @@ export type ReferralUser = {
   creditsEarned: number;
 };
 
-export type ReferralStats = {
-  referredCount: number;
-  convertedCount: number;
-  totalCredits: number;
-};
-
 export type ActivityPoint = {
   date: string; // YYYY-MM-DD
   referrals: number;
