@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Purchased Books",
 };
 
-export async function getPurchasedBooksData() {
+async function fetchPurchasedBooksData() {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/dashboard/purchased-books`,
@@ -29,7 +29,7 @@ export async function getPurchasedBooksData() {
 }
 
 export default async function PurchasedBooksPage() {
-  const purchasedBooksData = await getPurchasedBooksData();
+  const purchasedBooksData = await fetchPurchasedBooksData();
 
   if (!purchasedBooksData) {
     return (

@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
-export async function getDashboardData() {
+async function fetchDashboardData() {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/dashboard`,
@@ -25,7 +25,7 @@ export async function getDashboardData() {
 }
 
 export default async function OverviewPage() {
-  const dashboardData = await getDashboardData();
+  const dashboardData = await fetchDashboardData();
 
   if (!dashboardData) {
     return (

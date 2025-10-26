@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "Books",
 };
 
-export async function getBooks() {
+async function fetchBooks() {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books`);
     const data = await response.json();
@@ -25,7 +25,7 @@ export async function getBooks() {
 }
 
 export default async function BooksPage() {
-  const books = await getBooks();
+  const books = await fetchBooks();
 
   if (!books) {
     return (
