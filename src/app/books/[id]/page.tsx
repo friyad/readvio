@@ -1,31 +1,40 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import Image from "next/image";
+import { Heart } from "lucide-react";
 import Link from "next/link";
-import { Star, Heart } from "lucide-react";
-import { allBooks, sections } from "@/data/books";
 import type { Book, BookId } from "@/types/book";
 import { Button } from "@/components/ui/button";
-import BookCard from "../_components/BookCard";
 import RelatedBooks from "./_components/RelatedBooks";
 import { Ratings } from "@/components/ui/ratings";
+import PurchaseBook from "./_components/PurchaseBook";
+import { Metadata } from "next";
+import { getBooks } from "../page";
+
+export const dynamic = "force-dynamic";
 
 type PageProps = {
   params: { id: string };
 };
 
-const findBookById = (id: BookId): Book | undefined => {
-  return (
-    allBooks.find((b) => b.id === id) ||
-    sections.flatMap((s) => s.books).find((b) => b.id === id)
-  );
-};
+async function getBookById(id: BookId) {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/books/${id}`
+    );
+    const data = await response.json();
+    if (data?.message || !data) {
+      throw new Error(data?.message || "Failed to fetch book");
+    }
+    return data as Book;
+  } catch (error: unknown) {
+    return null;
+  }
+}
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { id } = await params;
-  const book = findBookById(id);
+  const book = await getBookById(id);
   return {
     title: book ? `${book.title}` : "Book",
   };
@@ -33,9 +42,21 @@ export async function generateMetadata({
 
 export default async function BookDetailsPage({ params }: PageProps) {
   const { id } = await params;
-  const book = findBookById(id);
+  const book = await getBookById(id);
+  const allBooks = await getBooks();
 
-  if (!book) return notFound();
+  if (!book) {
+    return (
+      <div>
+        <div className="flex flex-col justify-center items-center min-h-[40dvh]">
+          <p className="text-primary-blue/70 text-sm mb-4">Book not found.</p>
+          <Link href="/books">
+            <Button variant="outline">Go to books</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="py-8">
@@ -87,9 +108,7 @@ export default async function BookDetailsPage({ params }: PageProps) {
           </div>
 
           <div className="mt-4 flex xsm:flex-row flex-col flex-wrap gap-3">
-            <Button variant="orange" className="min-w-40 w-full xsm:w-fit">
-              Buy now
-            </Button>
+            <PurchaseBook bookId={"68fd2942b1204988ec4f9332"} />
             <Button variant="outline" className="min-w-40 w-full xsm:w-fit">
               <Heart className="mr-2 h-4 w-4" /> Add to wishlist
             </Button>
