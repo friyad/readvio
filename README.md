@@ -232,10 +232,10 @@ src/
 | Page         | Screenshot  |
 | ------------ | ----------- |
 | Home         | <img width="1920" height="951" alt="image" src="https://github.com/user-attachments/assets/9f0e27f6-fa7b-4333-bc3e-81b7ec1977bd" /> |
-| Books        | <img width="1920" height="951" alt="image" src="https://github.com/user-attachments/assets/9f0e27f6-fa7b-4333-bc3e-81b7ec1977bd" /> |
-| Book Details | <img width="1920" height="951" alt="image" src="https://github.com/user-attachments/assets/9f0e27f6-fa7b-4333-bc3e-81b7ec1977bd" /> |
-| Dashboard    | <img width="1920" height="951" alt="image" src="https://github.com/user-attachments/assets/9f0e27f6-fa7b-4333-bc3e-81b7ec1977bd" /> |
-| Referrals    | <img width="1920" height="951" alt="image" src="https://github.com/user-attachments/assets/9f0e27f6-fa7b-4333-bc3e-81b7ec1977bd" /> |
+| Books        | <img width="1920" height="951" alt="image" src="https://github.com/user-attachments/assets/8abee05c-58a0-4ad7-a033-59fc36402167" /> |
+| Book Details | <img width="1920" height="953" alt="image" src="https://github.com/user-attachments/assets/d26b8512-434d-465b-9b6e-cae0974b7c70" /> |
+| Dashboard    | <img width="1920" height="954" alt="image" src="https://github.com/user-attachments/assets/f420eecc-535a-4c5a-b81c-4eea1f6ccc99" /> |
+| Referrals    | <img width="1920" height="947" alt="image" src="https://github.com/user-attachments/assets/cf5a5ec1-23d3-4253-b802-b97c11af6166" /> |
 | Login        | <img width="1920" height="953" alt="image" src="https://github.com/user-attachments/assets/356550de-db27-4e17-9644-f37a1f8b9c73" /> |
 | Sign Up      | <img width="1920" height="950" alt="image" src="https://github.com/user-attachments/assets/67cdccf0-83a5-4700-aea4-099140b9a306" /> |
 
