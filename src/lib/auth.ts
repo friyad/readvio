@@ -9,6 +9,14 @@ export const auth = betterAuth({
   database: mongodbAdapter(db, {
     client,
   }),
+  advanced: {
+    cookiePrefix: "readvio",
+    cookieOptions: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+    },
+  },
   emailAndPassword: {
     enabled: true,
   },

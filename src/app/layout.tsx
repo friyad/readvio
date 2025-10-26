@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Instrument_Sans } from "next/font/google";
 import SiteHeader from "@/components/header/site-header";
 import { Toaster } from "sonner";
+import NextTopLoader from "nextjs-toploader";
 
 import "./globals.css";
 import { auth } from "@/lib/auth";
@@ -37,15 +38,24 @@ export default async function RootLayout({
     headers: await headers(),
   });
 
+  const plainSession = session ? JSON.parse(JSON.stringify(session)) : null;
+
   return (
     <html lang="en">
       <body
         className={`${inter.variable} ${instrumentSans.variable} antialiased`}
       >
+        <NextTopLoader
+          color="#e87a30"
+          height={5}
+          zIndex={1600}
+          showSpinner={false}
+          shadow={false}
+        />
         <div className="[&>section]:p-0">
           <Toaster richColors closeButton position="top-center" />
         </div>
-        <SiteHeader user={session?.user} />
+        <SiteHeader user={plainSession?.user} />
         <div className="overflow-x-clip">{children}</div>
       </body>
     </html>
