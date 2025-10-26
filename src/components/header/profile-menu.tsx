@@ -75,7 +75,7 @@ const ProfileMenu = ({}: ProfileMenuProps) => {
             <span className="inline-flex h-2 w-2 rounded-full bg-primary-orange" />
             <span className="text-primary-blue">Referral points</span>
             <span className="ml-0.5 font-semibold text-primary-blue">
-              {user?.referrals?.length || 0}
+              {user?.creditScore || 0}
             </span>
           </div>
         </MenuItem>

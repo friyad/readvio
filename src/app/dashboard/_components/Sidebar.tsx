@@ -15,6 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Dispatch, SetStateAction } from "react";
 import ProfileMenu from "@/components/header/profile-menu";
+import { useAuthStore } from "@/stores/auth-store";
 
 const items = [
   { href: "/dashboard", label: "Overview", icon: Home },
@@ -27,12 +28,11 @@ const items = [
 
 interface Props {
   setOpen?: Dispatch<SetStateAction<boolean>>;
-  userName?: string;
-  referralPoints?: number;
 }
 
-const Sidebar = ({ setOpen, userName, referralPoints }: Props) => {
+const Sidebar = ({ setOpen }: Props) => {
   const pathname = usePathname();
+  const user = useAuthStore((state) => state.user);
 
   return (
     <aside className="flex h-full w-full md:w-48 lg:w-56 mxl:w-64 flex-col border-r border-accent-blue/20 bg-clean-white pb-6 overflow-auto">
@@ -74,12 +74,9 @@ const Sidebar = ({ setOpen, userName, referralPoints }: Props) => {
           })}
         </ul>
 
-        {userName && referralPoints && (
+        {user && user.name && (
           <div className="md:hidden">
-            <ProfileMenu
-              userName={userName || "Guest"}
-              referralPoints={referralPoints || 0}
-            />
+            <ProfileMenu />
           </div>
         )}
       </nav>

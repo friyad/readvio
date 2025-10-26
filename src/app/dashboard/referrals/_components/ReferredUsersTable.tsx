@@ -1,12 +1,22 @@
 "use client";
 
-import { referredUsers } from "@/data/referrals";
 import { useMemo, useState } from "react";
 import TableFooter from "./TableFooter";
 import TextInput from "@/components/ui/input-text";
 import { SearchIcon } from "lucide-react";
+import { formatDateForDisplay } from "@/utils/date";
 
-const ReferredUsersTable = () => {
+interface ReferredUsersTableProps {
+  referredUsers: {
+    name: string;
+    email: string;
+    referredOn: string;
+    isConverted: boolean;
+    credits: number;
+  }[];
+}
+
+const ReferredUsersTable = ({ referredUsers }: ReferredUsersTableProps) => {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   const pageSize = 10;
@@ -55,7 +65,7 @@ const ReferredUsersTable = () => {
             <tbody className="">
               {pageData.map((u) => (
                 <tr
-                  key={u.id}
+                  key={u.email}
                   className="border-b border-accent-blue/10 table-row"
                 >
                   <td className="px-2.5 lg:px-5 py-3 whitespace-nowrap">
@@ -65,12 +75,12 @@ const ReferredUsersTable = () => {
                     {u.email}
                   </td>
                   <td className="px-2.5 lg:px-5 py-3">
-                    {new Date(u.joinedAt).toLocaleDateString()}
+                    {formatDateForDisplay(u.referredOn)}
                   </td>
                   <td className="px-2.5 lg:px-5 py-3">
-                    {u.converted ? "Yes" : "No"}
+                    {u.isConverted ? "Yes" : "No"}
                   </td>
-                  <td className="px-2.5 lg:px-5 py-3">{u.creditsEarned}</td>
+                  <td className="px-2.5 lg:px-5 py-3">{u.credits}</td>
                 </tr>
               ))}
             </tbody>

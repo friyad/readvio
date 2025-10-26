@@ -108,7 +108,7 @@ export default async function BookDetailsPage({ params }: PageProps) {
           </div>
 
           <div className="mt-4 flex xsm:flex-row flex-col flex-wrap gap-3">
-            <PurchaseBook bookId={"68fd2942b1204988ec4f9332"} />
+            <PurchaseBook bookId={book._id} />
             <Button variant="outline" className="min-w-40 w-full xsm:w-fit">
               <Heart className="mr-2 h-4 w-4" /> Add to wishlist
             </Button>
