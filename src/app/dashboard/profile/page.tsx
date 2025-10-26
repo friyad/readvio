@@ -1,12 +1,21 @@
 import { Metadata } from "next";
 import Avatar from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { formatDateForDisplay } from "@/utils/date";
 
 export const metadata: Metadata = {
   title: "Profile",
 };
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  const user = session?.user;
+
   return (
     <div className="max-w-2xl mx-auto space-y-8">
       <div className="space-y-2">
@@ -18,17 +27,20 @@ export default function ProfilePage() {
       <div className="rounded-xl border border-accent-blue/20 bg-white p-6 shadow-sm space-y-6">
         {/* Avatar and name */}
         <div className="flex flex-col sm:flex-row items-center gap-6">
-          <Avatar name="John Doe" className="size-24 text-4xl" />
+          <Avatar name={user?.name || "Guest"} className="size-24 text-4xl" />
 
           <div className="flex-1 min-w-0 space-y-2">
             <div className="text-xl font-semibold text-primary-blue">
-              John Doe
+              {user?.name || "Guest"}
             </div>
             <div className="text-primary-blue/80 truncate">
-              john.doe@email.com
+              {user?.email || "Guest"}
             </div>
             <div className="text-primary-blue/60 text-xs">
-              Joined: <span className="font-medium">October 25, 2025</span>
+              Joined:{" "}
+              <span className="font-medium">
+                {formatDateForDisplay(user?.createdAt?.toISOString() || "")}
+              </span>
             </div>
           </div>
         </div>
@@ -41,7 +53,7 @@ export default function ProfilePage() {
               Full Name
             </label>
             <div className="p-3 rounded-md border border-accent-blue/20 bg-accent-blue/5 text-primary-blue">
-              John Doe
+              {user?.name || "Guest"}
             </div>
           </div>
           <div>
@@ -49,7 +61,7 @@ export default function ProfilePage() {
               Email
             </label>
             <div className="p-3 rounded-md border border-accent-blue/20 bg-accent-blue/5 text-primary-blue">
-              john.doe@email.com
+              {user?.email || "Guest"}
             </div>
           </div>
           <div>
@@ -57,7 +69,7 @@ export default function ProfilePage() {
               Subscription
             </label>
             <div className="p-3 rounded-md border border-accent-blue/20 bg-accent-blue/5 text-primary-blue">
-              Basic
+              {user?.creditScore || 0}
             </div>
           </div>
           <div>
@@ -65,7 +77,7 @@ export default function ProfilePage() {
               Joined
             </label>
             <div className="p-3 rounded-md border border-accent-blue/20 bg-accent-blue/5 text-primary-blue">
-              October 25, 2025
+              {formatDateForDisplay(user?.createdAt?.toISOString() || "")}
             </div>
           </div>
         </div>
