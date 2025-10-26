@@ -13,8 +13,9 @@ export const auth = betterAuth({
     cookiePrefix: "readvio",
     cookieOptions: {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
       sameSite: "none",
+      domain: process.env.NEXT_PUBLIC_FRONTEND_DOMAIN,
     },
   },
   emailAndPassword: {
