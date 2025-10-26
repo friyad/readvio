@@ -3,21 +3,21 @@ import Link from "next/link";
 import BookCard from "../../_components/BookCard";
 
 interface RelatedBooksProps {
-  allBooks: Book[];
+  allBooks?: Book[] | null;
   book: Book;
 }
 
 const RelatedBooks = ({ allBooks, book }: RelatedBooksProps) => {
-  const related = allBooks
-    .filter(
+  const relatedBooks = allBooks
+    ?.filter(
       (b) =>
-        b.id !== book.id &&
+        b._id !== book._id &&
         (b.author === book.author ||
           b.tags?.some((t) => book.tags?.includes(t) ?? false))
     )
     .slice(0, 8);
 
-  if (related.length === 0) return null;
+  if (relatedBooks?.length === 0) return null;
 
   return (
     <section className="mx-auto mt-10 w-full max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -33,8 +33,8 @@ const RelatedBooks = ({ allBooks, book }: RelatedBooksProps) => {
         </Link>
       </div>
       <div className="grid grid-cols-1 gap-4 xsm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {related.map((b) => (
-          <BookCard key={b.id} book={b} />
+        {relatedBooks?.map((b) => (
+          <BookCard key={b._id} book={b} />
         ))}
       </div>
     </section>

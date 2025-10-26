@@ -1,7 +1,5 @@
 import { Ratings } from "@/components/ui/ratings";
-import { cn } from "@/lib/utils";
 import type { Book } from "@/types/book";
-import { Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -15,12 +13,14 @@ export default function BookCard({ book }: Props) {
 
   return (
     <Link
-      href={`/books/${book.id}`}
+      href={`/books/${book._id}`}
       className="group flex flex-col overflow-hidden rounded-lg border border-accent-blue/20 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow w-full"
     >
       <div className="relative aspect-20/18 w-full overflow-hidden bg-clean-white">
         <Image
           src={book.coverImageUrl}
+          placeholder={book.placeholderImageUrl ? "blur" : "empty"}
+          blurDataURL={book.placeholderImageUrl ? book.placeholderImageUrl : ""}
           alt={book.title}
           width={450}
           height={600}

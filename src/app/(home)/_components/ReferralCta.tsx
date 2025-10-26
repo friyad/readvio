@@ -66,14 +66,14 @@ export default function ReferralCta() {
           </p>
 
           <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-5">
-            <Link href="/refer">
+            <Link href="/dashboard/link">
               <Button variant="orange" className="w-full sm:w-fit">
                 <UserStar className="size-5 mr-2" />
                 Refer a friend
               </Button>
             </Link>
 
-            <Link href="/rewards">
+            <Link href="/dashboard">
               <Button variant="outline" className="w-full sm:w-fit">
                 <Stars className="size-5 mr-2" />
                 View rewards

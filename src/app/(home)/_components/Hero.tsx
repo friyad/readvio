@@ -24,10 +24,10 @@ const Hero = () => {
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
-            <Link href="/store">
+            <Link href="/pricing">
               <Button variant="orange">Start your free trial</Button>
             </Link>
-            <Link href="/browse">
+            <Link href="/books">
               <Button variant="outline">
                 <BookOpen className="size-5 mr-2" />
                 Browse books

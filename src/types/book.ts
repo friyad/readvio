@@ -7,10 +7,11 @@ export type Price = {
 };
 
 export type Book = {
-  id: BookId;
+  _id: BookId;
   title: string;
   author: string;
   coverImageUrl: string;
+  placeholderImageUrl: string;
   rating: number;
   ratingCount: number;
   tags?: string[];
