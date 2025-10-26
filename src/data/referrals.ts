@@ -17,6 +17,3 @@ export const referredUsers: ReferralUser[] = Array.from(
     creditsEarned: i % 2 === 0 ? 2 : 0,
   })
 );
-
-export const referralBaseUrl = "https://readvio.app/r/";
-export const currentUserReferralCode = "alex-1234";

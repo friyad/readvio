@@ -13,12 +13,15 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { extractErrorMessage } from "@/utils/errorExtractor";
 import { useAuthStore } from "@/stores/auth-store";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { UserType } from "@/types/user.type";
 
 const SignUpForm = () => {
+  const searchParams = useSearchParams();
+  const referredBy = searchParams.get("r");
   const setUser = useAuthStore((state) => state.setUser);
   const router = useRouter();
-  const [isEmailLoading, setIsEmailLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -36,21 +39,22 @@ const SignUpForm = () => {
   });
 
   const onSubmit = async (values: SignupValues) => {
-    setIsEmailLoading(true);
+    setIsLoading(true);
     try {
       const res = await signUp.email({
         email: values.email,
         name: values.name,
         password: values.password,
+        referredBy: referredBy ?? null!,
       });
       if (res.error) throw new Error(res.error.message);
-      setUser(res.data?.user);
+      setUser(res.data?.user as UserType);
       router.replace("/");
       toast.success("Sign up successful");
-      setIsEmailLoading(false);
     } catch (e: unknown) {
       toast.error(extractErrorMessage(e));
-      setIsEmailLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -113,7 +117,7 @@ const SignUpForm = () => {
         <Button
           type="submit"
           variant="orange"
-          loading={isEmailLoading}
+          loading={isLoading}
           className="w-full"
         >
           Sign up

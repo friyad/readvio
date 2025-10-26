@@ -11,11 +11,11 @@ import useScrollPinned from "@/hooks/scroll-pinned";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
-import { User } from "better-auth";
+import { UserType } from "@/types/user.type";
 import { useAuthStore } from "@/stores/auth-store";
 
 type SiteHeaderProps = {
-  user?: User;
+  user?: UserType;
 };
 
 const navItems: { label: string; href: string }[] = [
@@ -76,8 +76,6 @@ export default function SiteHeader({ user: userData }: SiteHeaderProps) {
 
   const user = userState || userData;
 
-  const referralPoints = 0;
-
   const items = navItems.map((item) => (
     <Link
       key={item.href}
@@ -130,15 +128,12 @@ export default function SiteHeader({ user: userData }: SiteHeaderProps) {
                 <span className="inline-flex h-2 w-2 rounded-full bg-primary-orange" />
                 <span className="text-primary-blue">Referral</span>
                 <span className="font-semibold text-primary-blue">
-                  {referralPoints} pts
+                  {user?.referrals?.length || 0} pts
                 </span>
               </div>
 
               <div className="hidden md:block">
-                <ProfileMenu
-                  userName={user.name || "Guest"}
-                  referralPoints={referralPoints || 0}
-                />
+                <ProfileMenu />
               </div>
             </div>
           ) : (
@@ -182,7 +177,7 @@ export default function SiteHeader({ user: userData }: SiteHeaderProps) {
                 <span className="inline-flex h-2 w-2 rounded-full bg-primary-orange" />
                 <span className="text-primary-blue">Referral</span>
                 <span className="font-semibold text-primary-blue ml-auto">
-                  {referralPoints} pts
+                  {user?.referrals?.length || 0} pts
                 </span>
               </div>
             )}
@@ -201,10 +196,7 @@ export default function SiteHeader({ user: userData }: SiteHeaderProps) {
             </div>
 
             {user && user.email ? (
-              <ProfileMenu
-                userName={user.name || "Guest"}
-                referralPoints={referralPoints || 0}
-              />
+              <ProfileMenu />
             ) : (
               <AuthButtons className="mt-6 flex md:hidden flex-col gap-2 **:w-full **:justify-center" />
             )}

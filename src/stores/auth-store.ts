@@ -1,12 +1,12 @@
 import { create } from "zustand";
-import { User } from "better-auth";
+import { UserType } from "@/types/user.type";
 
 export type AuthState = {
-  user?: User | null;
+  user?: UserType | null;
 };
 
 export type AuthActions = {
-  setUser: (user: User) => void;
+  setUser: (user: UserType) => void;
   clearUser: () => void;
 };
 
@@ -14,6 +14,6 @@ export type AuthStore = AuthState & AuthActions;
 
 export const useAuthStore = create<AuthStore>((set) => ({
   user: null,
-  setUser: (user: User) => set({ user }),
+  setUser: (user: UserType) => set({ user }),
   clearUser: () => set({ user: null }),
 }));
