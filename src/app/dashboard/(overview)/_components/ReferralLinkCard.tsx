@@ -1,14 +1,16 @@
 "use client";
 
-import { referralBaseUrl, currentUserReferralCode } from "@/data/referrals";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link as LinkIcon, Copy, Share2 } from "lucide-react";
 import TextInput from "@/components/ui/input-text";
+import { useAuthStore } from "@/stores/auth-store";
 
 const ReferralLinkCard = () => {
+  const user = useAuthStore((state) => state.user);
   const [copied, setCopied] = useState(false);
-  const url = referralBaseUrl + currentUserReferralCode;
+  const referralBaseUrl = process.env.NEXT_PUBLIC_BASE_URL + "/r/";
+  const url = referralBaseUrl + user?.id;
 
   const copy = async () => {
     try {
@@ -27,6 +29,8 @@ const ReferralLinkCard = () => {
       copy();
     }
   };
+
+  if (!user) return null;
 
   return (
     <div className="rounded-xl border border-accent-blue/20 bg-white p-4 xsm:p-5 lg:p-6 shadow-sm">

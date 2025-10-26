@@ -14,9 +14,10 @@ import { toast } from "sonner";
 import { extractErrorMessage } from "@/utils/errorExtractor";
 import { useAuthStore } from "@/stores/auth-store";
 import { useRouter } from "next/navigation";
+import { UserType } from "@/types/user.type";
 
 const LogInForm = () => {
-  const [isEmailLoading, setIsEmailLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const setUser = useAuthStore((state) => state.setUser);
   const router = useRouter();
   const {
@@ -30,20 +31,20 @@ const LogInForm = () => {
   });
 
   const onSubmit = async (values: LoginValues) => {
-    setIsEmailLoading(true);
+    setIsLoading(true);
     try {
       const res = await signIn.email({
         email: values.email,
         password: values.password,
       });
       if (res.error) throw new Error(res.error.message);
-      setUser(res.data?.user);
+      setUser(res.data?.user as UserType);
       router.replace("/");
       toast.success("Login successful");
-      setIsEmailLoading(false);
     } catch (e: unknown) {
       toast.error(extractErrorMessage(e));
-      setIsEmailLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -79,7 +80,7 @@ const LogInForm = () => {
           type="submit"
           variant="orange"
           className="w-full"
-          loading={isEmailLoading}
+          loading={isLoading}
         >
           Sign in
         </Button>

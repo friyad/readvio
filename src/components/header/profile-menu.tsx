@@ -36,13 +36,11 @@ const ProfileMenuTrigger = ({ userName }: { userName: string }) => {
   );
 };
 
-type ProfileMenuProps = {
-  userName: string;
-  referralPoints: number;
-};
+type ProfileMenuProps = {};
 
-const ProfileMenu = ({ userName, referralPoints }: ProfileMenuProps) => {
+const ProfileMenu = ({}: ProfileMenuProps) => {
   const clearUser = useAuthStore((state) => state.clearUser);
+  const user = useAuthStore((state) => state.user);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -67,7 +65,7 @@ const ProfileMenu = ({ userName, referralPoints }: ProfileMenuProps) => {
   return (
     <>
       <Menu
-        trigger={<ProfileMenuTrigger userName={userName} />}
+        trigger={<ProfileMenuTrigger userName={user?.name || "Guest"} />}
         openOnHover
         align="end"
         panelClassName="hidden md:block"
@@ -77,7 +75,7 @@ const ProfileMenu = ({ userName, referralPoints }: ProfileMenuProps) => {
             <span className="inline-flex h-2 w-2 rounded-full bg-primary-orange" />
             <span className="text-primary-blue">Referral points</span>
             <span className="ml-0.5 font-semibold text-primary-blue">
-              {referralPoints}
+              {user?.referrals?.length || 0}
             </span>
           </div>
         </MenuItem>
@@ -87,6 +85,9 @@ const ProfileMenu = ({ userName, referralPoints }: ProfileMenuProps) => {
         </MenuItem>
         <MenuItem href="/dashboard/referrals">
           <span className="text-primary-blue">Referrals</span>
+        </MenuItem>
+        <MenuItem href="/dashboard/link">
+          <span className="text-primary-blue">Referral Link</span>
         </MenuItem>
         <MenuItem href="/dashboard">
           <span className="text-primary-blue">Dashboard</span>
@@ -125,6 +126,13 @@ const ProfileMenu = ({ userName, referralPoints }: ProfileMenuProps) => {
               onClick={() => setOpen(false)}
             >
               Referrals
+            </Link>
+            <Link
+              href="/dashboard/link"
+              className="block px-3 py-3 text-sm text-primary-blue hover:bg-secondary-orange/10"
+              onClick={() => setOpen(false)}
+            >
+              Referral Link
             </Link>
             <Link
               href="/dashboard"

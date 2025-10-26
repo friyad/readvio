@@ -4,13 +4,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
-  BarChart3,
   Megaphone,
   User,
   Home,
   Link as LinkIcon,
   X,
   Settings,
+  Book,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dispatch, SetStateAction } from "react";
@@ -21,6 +21,7 @@ const items = [
   { href: "/dashboard/profile", label: "Profile", icon: User },
   { href: "/dashboard/referrals", label: "Referrals", icon: Megaphone },
   { href: "/dashboard/link", label: "Referral Link", icon: LinkIcon },
+  { href: "/dashboard/purchased-books", label: "Purchased Books", icon: Book },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
 ];
 
