@@ -65,7 +65,7 @@ const BooksSection = ({ section: s }: BooksSectionProps) => {
           className=""
         >
           {s.books.map((b) => (
-            <SwiperSlide key={b.id} className="">
+            <SwiperSlide key={b._id} className="">
               <BookCard book={b} />
             </SwiperSlide>
           ))}

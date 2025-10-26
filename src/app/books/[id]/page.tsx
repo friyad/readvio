@@ -7,12 +7,11 @@ import RelatedBooks from "./_components/RelatedBooks";
 import { Ratings } from "@/components/ui/ratings";
 import PurchaseBook from "./_components/PurchaseBook";
 import { Metadata } from "next";
-import { getBooks } from "../page";
 
 export const dynamic = "force-dynamic";
 
 type PageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 async function getBookById(id: BookId) {
@@ -25,6 +24,19 @@ async function getBookById(id: BookId) {
       throw new Error(data?.message || "Failed to fetch book");
     }
     return data as Book;
+  } catch (error: unknown) {
+    return null;
+  }
+}
+
+async function fetchBooks() {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books`);
+    const data = await response.json();
+    if (data?.message || !Array.isArray(data)) {
+      throw new Error(data?.message || "Failed to fetch books");
+    }
+    return data as Book[];
   } catch (error: unknown) {
     return null;
   }
@@ -43,7 +55,7 @@ export async function generateMetadata({
 export default async function BookDetailsPage({ params }: PageProps) {
   const { id } = await params;
   const book = await getBookById(id);
-  const allBooks = await getBooks();
+  const allBooks = await fetchBooks();
 
   if (!book) {
     return (

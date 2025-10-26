@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export async function getReferredUsersData() {
+async function fetchReferredUsersData() {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/dashboard/referrals`,
@@ -28,7 +28,7 @@ export async function getReferredUsersData() {
   }
 }
 export default async function ReferralsPage() {
-  const referredUsersData = await getReferredUsersData();
+  const referredUsersData = await fetchReferredUsersData();
 
   if (!referredUsersData) {
     return (
