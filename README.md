@@ -104,12 +104,14 @@ npm start
 
 ## Environment Variables
 
-| Variable               | Required | Default                 | Description                                                                                        |
-| ---------------------- | -------- | ----------------------- | -------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_API_URL`  | ✅ Yes   | –                       | Base URL of your backend API (e.g., `http://localhost:5000/api/v1`). Used for all server requests. |
-| `NEXT_PUBLIC_BASE_URL` | ✅ Yes   | `http://localhost:3000` | URL of your frontend application. Used for routing, client-auth and redirects.                     |
-| `BETTER_AUTH_SECRET`   | ✅ Yes   | –                       | Secret key used by **Better Auth** for authentication and token signing.                           |
-| `MONGODB_URI`          | ✅ Yes   | –                       | Connection string for your MongoDB database for **Better Auth**.                                   |
+| Variable                      | Required | Default                 | Description                                                                                      |
+| ----------------------------- | -------- | ----------------------- | ------------------------------------------------------------------------------------------------ |
+| `NODE_ENV`                    | ✅ Yes   | `development`           | Determines the environment in which the app runs (`development`, `production`, etc.).            |
+| `BETTER_AUTH_SECRET`          | ✅ Yes   | –                       | Secret key used by **Better Auth** for authentication and token signing.                         |
+| `NEXT_PUBLIC_BASE_URL`        | ✅ Yes   | `http://localhost:3000` | URL of your frontend application. Used for routing, client auth, and redirects.                  |
+| `NEXT_PUBLIC_FRONTEND_DOMAIN` | ⬜ No    | –                       | The domain name (e.g., `example.com`) of your frontend. Used for CORS or cookie domain settings. |
+| `NEXT_PUBLIC_API_URL`         | ✅ Yes   | –                       | Base URL of your backend API (e.g., `http://localhost:5000/api/v1`). Used for server requests.   |
+| `MONGODB_URI`                 | ✅ Yes   | –                       | Connection string for your MongoDB database for **Better Auth**.                                 |
 
 
 
