@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import Menu, { MenuItem, MenuSeparator } from "../ui/menu";
-import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import Avatar from "../ui/avatar";
 import { signOut } from "@/lib/auth-client";
@@ -43,7 +42,6 @@ const ProfileMenu = ({}: ProfileMenuProps) => {
   const user = useAuthStore((state) => state.user);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
 
   const handleSignOut = async () => {
     setIsLoading(true);
@@ -53,7 +51,7 @@ const ProfileMenu = ({}: ProfileMenuProps) => {
       clearUser();
       toast.success("Signed out successfully");
       setIsLoading(false);
-      router.replace("/");
+      location.reload();
       setOpen(false);
     } catch (error: unknown) {
       toast.error(extractErrorMessage(error));

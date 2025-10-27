@@ -8,19 +8,17 @@ import { TextInput } from "@/components/ui/input-text";
 import { PasswordInput } from "@/components/ui/input-password";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { signUp } from "@/lib/auth-client";
 import { useState } from "react";
 import { toast } from "sonner";
 import { extractErrorMessage } from "@/utils/errorExtractor";
 import { useAuthStore } from "@/stores/auth-store";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { UserType } from "@/types/user.type";
 
 const SignUpForm = () => {
   const searchParams = useSearchParams();
   const referredBy = searchParams.get("r");
   const setUser = useAuthStore((state) => state.setUser);
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -41,15 +39,24 @@ const SignUpForm = () => {
   const onSubmit = async (values: SignupValues) => {
     setIsLoading(true);
     try {
-      const res = await signUp.email({
-        email: values.email,
-        name: values.name,
-        password: values.password,
-        referredBy: referredBy ?? null!,
-      });
-      if (res.error) throw new Error(res.error.message);
-      setUser(res.data?.user as UserType);
-      router.replace("/");
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/signup`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: values.email,
+            name: values.name,
+            password: values.password,
+            referredBy: referredBy ?? null,
+          }),
+        }
+      );
+      const data = await res.json();
+      if (!data?.data) throw new Error(data?.error || "Sign up failed");
+      setUser(data?.data as UserType);
+      location.reload();
       toast.success("Sign up successful");
     } catch (e: unknown) {
       toast.error(extractErrorMessage(e));

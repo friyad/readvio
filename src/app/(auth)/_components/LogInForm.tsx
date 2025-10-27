@@ -13,13 +13,11 @@ import { signIn } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { extractErrorMessage } from "@/utils/errorExtractor";
 import { useAuthStore } from "@/stores/auth-store";
-import { useRouter } from "next/navigation";
 import { UserType } from "@/types/user.type";
 
 const LogInForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const setUser = useAuthStore((state) => state.setUser);
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -39,7 +37,7 @@ const LogInForm = () => {
       });
       if (res.error) throw new Error(res.error.message);
       setUser(res.data?.user as UserType);
-      router.replace("/");
+      location.reload();
       toast.success("Login successful");
     } catch (e: unknown) {
       toast.error(extractErrorMessage(e));

@@ -1,40 +1,47 @@
-import { betterAuth, User } from "better-auth";
+import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { nextCookies } from "better-auth/next-js";
-import { MongoClient, ObjectId } from "mongodb";
+import { MongoClient } from "mongodb";
 
 const client = new MongoClient(process.env.MONGODB_URI as string);
 const db = client.db();
 
-export const updateUserReferrals = async (
-  user: User & Record<string, unknown>
-) => {
-  if (user.referredBy && user.referredBy !== "") {
-    const referredByUser = await db
-      .collection("user")
-      .findOne({ _id: new ObjectId(user.referredBy as string) });
-
-    if (referredByUser) {
-      const newReferral = {
-        userId: referredByUser._id,
-        referredUserId: new ObjectId(user.id),
-        referredOn: new Date(),
-        isConverted: false,
-        creditEarned: 0,
-      };
-      const res = await db.collection("referrals").insertOne(newReferral);
-
-      await db.collection("user").updateOne(
-        { _id: referredByUser._id },
-        {
-          $set: {
-            referrals: [...referredByUser.referrals, res.insertedId.toString()],
-          },
-        }
-      );
-    }
-  }
-};
+// async function updateUserReferrals(user: User & Record<string, unknown>) {
+//   try {
+//     console.log("Updating user referrals:---------", user);
+//     if (user.referredBy && user.referredBy !== "") {
+//       const referredByUser = await db
+//         .collection("user")
+//         .findOne({ _id: new ObjectId(user.referredBy as string) });
+//       console.log("referredByUser:---------", referredByUser);
+//       if (referredByUser) {
+//         const newReferral = {
+//           userId: referredByUser._id,
+//           referredUserId: new ObjectId(user.id),
+//           referredOn: new Date(),
+//           isConverted: false,
+//           creditEarned: 0,
+//         };
+//         const res = await db.collection("referrals").insertOne(newReferral);
+//         console.log("res:---------", res);
+//         await db.collection("user").updateOne(
+//           { _id: referredByUser._id },
+//           {
+//             $set: {
+//               referrals: [
+//                 ...referredByUser.referrals,
+//                 res.insertedId.toString(),
+//               ],
+//             },
+//           }
+//         );
+//       }
+//       console.log("User referrals updated successfully:---------", user);
+//     }
+//   } catch (error: unknown) {
+//     console.error("Error updating user referrals:---------", error);
+//   }
+// }
 
 export const auth = betterAuth({
   database: mongodbAdapter(db, {
@@ -82,13 +89,6 @@ export const auth = betterAuth({
         type: "string[]",
         input: false,
         defaultValue: [],
-      },
-    },
-  },
-  databaseHooks: {
-    user: {
-      create: {
-        after: (user) => updateUserReferrals(user),
       },
     },
   },
