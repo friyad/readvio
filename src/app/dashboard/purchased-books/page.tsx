@@ -1,7 +1,7 @@
 import BookCard from "@/app/books/_components/BookCard";
 import { Book } from "@/types/book";
 import { Metadata } from "next";
-import { headers } from "next/headers";
+import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
@@ -11,11 +11,19 @@ export const metadata: Metadata = {
 
 async function fetchPurchasedBooksData() {
   try {
+    const cookieStore = await cookies();
+    const cookieHeader = cookieStore
+      .getAll()
+      .map(({ name, value }) => `${name}=${value}`)
+      .join("; ");
+
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/dashboard/purchased-books`,
       {
-        credentials: "include",
-        headers: await headers(),
+        headers: {
+          Cookie: cookieHeader,
+        },
+        cache: "no-store",
       }
     );
     const data = await response.json();

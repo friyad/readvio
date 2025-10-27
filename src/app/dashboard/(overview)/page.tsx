@@ -1,17 +1,25 @@
 import MetricCard from "./_components/MetricCard";
 import ActivityChart from "./_components/ActivityChart";
 import ReferralLinkCard from "./_components/ReferralLinkCard";
-import { headers } from "next/headers";
+import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
 async function fetchDashboardData() {
   try {
+    const cookieStore = await cookies();
+    const cookieHeader = cookieStore
+      .getAll()
+      .map(({ name, value }) => `${name}=${value}`)
+      .join("; ");
+
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/dashboard`,
       {
-        credentials: "include",
-        headers: await headers(),
+        headers: {
+          Cookie: cookieHeader,
+        },
+        cache: "no-store",
       }
     );
     const data = await response.json();

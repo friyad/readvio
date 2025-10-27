@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import ReferredUsersTable from "./_components/ReferredUsersTable";
-import { headers } from "next/headers";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Referrals",
@@ -10,15 +10,22 @@ export const dynamic = "force-dynamic";
 
 async function fetchReferredUsersData() {
   try {
+    const cookieStore = await cookies();
+    const cookieHeader = cookieStore
+      .getAll()
+      .map(({ name, value }) => `${name}=${value}`)
+      .join("; ");
+
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/dashboard/referrals`,
       {
-        credentials: "include",
-        headers: await headers(),
+        headers: {
+          Cookie: cookieHeader,
+        },
+        cache: "no-store",
       }
     );
     const data = await response.json();
-    console.log(data);
     if (!data.data) {
       throw new Error(data?.message || "Failed to fetch referred users");
     }
@@ -27,6 +34,7 @@ async function fetchReferredUsersData() {
     return null;
   }
 }
+
 export default async function ReferralsPage() {
   const referredUsersData = await fetchReferredUsersData();
 

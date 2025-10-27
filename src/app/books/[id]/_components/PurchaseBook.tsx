@@ -17,13 +17,13 @@ const PurchaseBook = ({ bookId }: PurchaseBookProps) => {
   const handlePurchase = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/purchase`, {
+      const res = await fetch(`/api/v1/purchase`, {
         method: "POST",
-        body: JSON.stringify({ bookId }),
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({ bookId }),
       });
       const data = await res.json();
       if (!data.data)

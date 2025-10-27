@@ -1,5 +1,6 @@
 import { betterAuth, User } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
+import { nextCookies } from "better-auth/next-js";
 import { MongoClient, ObjectId } from "mongodb";
 
 const client = new MongoClient(process.env.MONGODB_URI as string);
@@ -10,11 +11,19 @@ export const auth = betterAuth({
     client,
   }),
   advanced: {
+    useSecureCookies: process.env.NODE_ENV === "production",
     cookiePrefix: "readvio",
     cookieOptions: {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "none",
+      domain: process.env.NEXT_PUBLIC_FRONTEND_DOMAIN,
+    },
+    defaultCookieAttributes: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+      partitioned: false,
       domain: process.env.NEXT_PUBLIC_FRONTEND_DOMAIN,
     },
   },
@@ -53,6 +62,7 @@ export const auth = betterAuth({
       },
     },
   },
+  plugins: [nextCookies()],
 });
 
 export const updateUserReferrals = async (
