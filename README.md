@@ -20,6 +20,8 @@ Users can register or log in, share unique referral links, earn credits when the
 
 Live Site: https://readvio.vercel.app
 
+Backend Repo: https://github.com/friyad/readvio-backend
+
 Loom Overview:
 
 
